@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+    network_mode: "host"
+    volumes:
+      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  publisher:
+    build:
+      context: .
+      dockerfile: ./publisher/Dockerfile
+    depends_on:
+      - mosquitto
+    networks:
+      - default
+      
+  subscriber:
+    build:
+      context: .
+      dockerfile: ./sender_influx/Dockerfile
+    depends_on:
+      - mosquitto
+    networks:
+      - default
