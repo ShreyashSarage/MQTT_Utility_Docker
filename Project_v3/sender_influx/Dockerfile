@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the Python script into the container
 COPY ./sender_influx/influx_sender.py .
-COPY ./sender_influx/config.py .
+COPY ./sender_influx/config.json .
 
 # Install any dependencies required by the subscriber script
 RUN pip install paho-mqtt influxdb-client
